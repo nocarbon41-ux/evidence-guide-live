@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { LiveStreamTelemetry, LiveStreamAnomaly, ForensicCase } from '../../types';
 import { generatePulseWave } from '../../services/forensicEngine';
+import { LiveInterviewCall } from './LiveInterviewCall';
 
 interface LiveVideoCallViewProps {
   onCaptureEvidence: (snapshotData: Partial<ForensicCase>) => void;
@@ -388,6 +389,7 @@ export const LiveVideoCallView: React.FC<LiveVideoCallViewProps> = ({
         </div>
       </div>
 
+      <LiveInterviewCall />
       {cameraError && (
         <div className="p-3 rounded-lg border border-[#C97A1E]/30 bg-[#C97A1E]/10 text-xs text-[#C97A1E] dark:text-[#E29332] flex items-center gap-2">
           <Info className="w-4 h-4 shrink-0" />

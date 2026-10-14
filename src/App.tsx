@@ -15,7 +15,11 @@ import { UserProfile, ForensicCase, SystemNotification, AnnotationItem } from '.
 
 export default function App() {
   // Navigation & Layout
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [activeTab, setActiveTab] = useState<string>(() =>
+    typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('call')
+      ? 'live_call'
+      : 'dashboard'
+  );
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
   
