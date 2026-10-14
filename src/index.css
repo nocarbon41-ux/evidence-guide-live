@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --app-bg: #FAF7F0;
+  --app-card: #FFFEFA;
+  --app-primary: #234B38;
+  --app-primary-hover: #1b3b2c;
+  --app-accent: #C87552;
+  --app-accent-hover: #b46543;
+  --app-text: #2D3029;
+  --app-muted: #6B7265;
+  --app-border: #E6DFD2;
+  --app-surface-subtle: #F3EFE6;
+  --app-danger: #B33927;
+  --app-warning: #C97A1E;
+  --app-success: #2E6B47;
+}
+
+.dark {
+  --app-bg: #131512;
+  --app-card: #1C1E19;
+  --app-primary: #3C7054;
+  --app-primary-hover: #4a8666;
+  --app-accent: #DE805E;
+  --app-accent-hover: #e99070;
+  --app-text: #ECEAE4;
+  --app-muted: #9DA396;
+  --app-border: #2D3228;
+  --app-surface-subtle: #232720;
+  --app-danger: #E0533C;
+  --app-warning: #E29332;
+  --app-success: #438D62;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.font-editorial {
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+.font-mono-code {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--app-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--app-muted);
+}
+
+/* Scanline / HUD overlay effect for forensic analysis */
+.hud-grid {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(35, 75, 56, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(35, 75, 56, 0.05) 1px, transparent 1px);
+}
+
+.dark .hud-grid {
+  background-image: 
+    linear-gradient(to right, rgba(222, 128, 94, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(222, 128, 94, 0.08) 1px, transparent 1px);
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+.animate-scanline {
+  animation: scanline 4s linear infinite;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "EVIDENCE GUIDE LIVE",
+  "description": "Real-time deepfake detection and media verification suite for investigative journalists and live interview vetting.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
