@@ -11,6 +11,20 @@ const callClasses = {
   input: 'w-full rounded-lg border border-[#E6DFD2] dark:border-[#2F342B] bg-[#FAF7F0] dark:bg-[#232720] text-[#2D3029] dark:text-[#ECEAE4] px-3 py-2.5 text-sm outline-none focus:border-[#234B38] dark:focus:border-[#3C7054]',
 };
 
+async function createSignalingPeer() {
+  const response = await fetch('/api/rtc-config', { cache: 'no-store' });
+  if (!response.ok) throw new Error('The signaling server is unavailable. Please try again later.');
+  const rtcConfig = await response.json() as { peerPath: string; iceServers: RTCIceServer[] };
+  const secure = window.location.protocol === 'https:';
+  return new Peer({
+    host: window.location.hostname,
+    port: window.location.port ? Number(window.location.port) : secure ? 443 : 80,
+    path: `${rtcConfig.peerPath.replace(/\/+$/, '')}/`,
+    secure,
+    config: { iceServers: rtcConfig.iceServers },
+  });
+}
+
 export const LiveInterviewCall: React.FC = () => {
   const invitedRoom = typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('call') : null;
   const guestView = Boolean(invitedRoom);
@@ -66,7 +80,7 @@ export const LiveInterviewCall: React.FC = () => {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       localStreamRef.current = stream;
       setLocalStream(stream);
-      const peer = new Peer();
+      const peer = await createSignalingPeer();
       openPeer(peer);
       peer.on('open', (peerId) => {
         const url = new URL(window.location.href);
@@ -113,7 +127,7 @@ export const LiveInterviewCall: React.FC = () => {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       localStreamRef.current = stream;
       setLocalStream(stream);
-      const peer = new Peer();
+      const peer = await createSignalingPeer();
       openPeer(peer);
       peer.on('open', () => {
         const call = peer.call(invitedRoom, stream, { metadata: { displayName: guestName.trim().slice(0, 60) } });
